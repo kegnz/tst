@@ -1,0 +1,18 @@
+name: tag
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - '.github/workflows/tag.yml'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: tag
+        run: |
+          RELEASE_LATEST="$(curl -IkLs -o /tmp/NUL -w %{url_effective} https://github.com/brave/brave-browser/releases/latest | grep -o "[^/]*$")"
+          echo "GIT_TAGNAME=v${RELEASE_LATEST#v}"
